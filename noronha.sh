@@ -5,6 +5,12 @@ nha -d -p model new \
 --data-file '{"name": "train.txt", "required": true, "max_mb": 4096, "desc": "TXT with phrases and labels"}' \
 --model-file '{"name": "fasttext.ftz", "required": true, "max_mb": 1024, "desc": "Fasttext binary"}'
 
+nha movers new \
+ --model sentiment-clf \
+ --name amazon-reviews-v1 \
+ --path ./model/
+
+
 nha -d -p proj new \
 --name sentiments \
 --model sentiment-clf \
@@ -13,7 +19,16 @@ nha -d -p proj new \
 
 nha -d -p proj build
 
-nha -d -p note --edit --port 9090 --ds sentiment-clf:amazon-reviews
+nha -d -p note --edit --port 9090
+
+
+nha -d -p depl new \
+--name prediction \
+--proj sentiments \
+--nb notebooks/predict \
+--mv sentiment-clf:amazon-reviews \
+--port 30090
+
 
 nha -d -p ds new \
 --name amazon-reviews \
@@ -27,6 +42,7 @@ nha -d -p train new \
 --nb notebooks/train \
 --params '{"epoch": 2}' \
 --ds sentiment-clf:amazon-reviews
+
 
 nha -d -p depl new \
 --name prediction \

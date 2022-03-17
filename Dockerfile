@@ -3,7 +3,7 @@ FROM noronhadataops/noronha:latest
 ENV TZ America/Sao_Paulo
 
 RUN apt -y update \
- && apt -y install gnupg build-essential curl wget zip unzip vim apt-transport-https \
+ && apt -y install gnupg build-essential curl wget vim apt-transport-https \
  && apt clean \
  && rm -rf /var/lib/apt/lists/*
 
@@ -14,6 +14,3 @@ RUN bash -c "source ${CONDA_HOME}/bin/activate ${CONDA_VENV} \
  && rm -rf requirements.txt"
 
 ADD notebooks ./notebooks
-
-
-
