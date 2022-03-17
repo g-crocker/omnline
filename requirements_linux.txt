@@ -1,0 +1,4 @@
+fasttext
+pandas
+scikit-learn
+Flask
